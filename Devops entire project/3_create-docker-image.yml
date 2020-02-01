@@ -1,0 +1,23 @@
+# Createting docker image and push to docker hub
+
+---
+- hosts: all
+  #ansadmin doesn't need root access to create an image
+  become: true
+
+  tasks:
+  - name: building docker image from docker file
+    command: docker build -t simple-devops-image:latest .
+    args:
+      chdir: /opt/docker
+
+  - name: create tag to image. Dockerhub accept the image with prefix of account name
+    command: docker tag simple-devops-image:latest prakashcheckin/simple-devops-image:latest
+
+  - name: push image on to dockerhub.com
+    command: docker push prakashcheckin/simple-devops-image:latest
+
+  - name: remove docker images from ansible server once it pushed to dockerhub
+    command: docker rmi prakashcheckin/simple-devops-image
+    ignore_errors: yes
+

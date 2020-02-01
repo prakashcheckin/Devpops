@@ -1,0 +1,33 @@
+Ansible script is written in ansilbe playbook.
+
+# To run ansbile playbook:
+
+    anible-playbook -i <hostfile> <playbook>
+
+# --check means it shows all the logs while executing this command
+    
+    ansible-playbook -i hosts simple-devops-project.yml --check
+
+
+
+Below two command is for jenkins job. In jenkins we need to give full path of host file and playbook
+================================================================================================
+
+
+# -i indicate invertory file. hosts is an invertory file. 
+# Host file has the list of IP address all managed server. where andall all this container needs to be deployed
+# Host file has two entry. one is local host and another one is IP of managed server(where container needs to be deployed)
+
+
+# Host has  two entry but --limit localhost indicate that this playbook command should excute only for local host.
+
+Command: ansible-playbook -i /opt/docker/hosts /opt/docker/create-simple-devops-image.yml --limit localhost;
+
+
+
+#--limit 172.31.40.7 indicate that this playbook command should execute only for host 172.31.40.7.
+# This playbook create an container. so that container will be created only in this particular IP address.
+# this command will be executed in ansible server but output will be provided in the particular server which is mentioned in --limit
+# this playbook create a docker container so managed server should have docekr installed prequestis. otherwise this playbook will get failed.
+Command: ansible-playbook -i /opt/docker/hosts /opt/docker/simple-devops-project.yml --limit 172.31.40.7;
+            

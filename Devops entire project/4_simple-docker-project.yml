@@ -1,0 +1,28 @@
+# Pull the docker image from docker hub and create a container 
+
+---
+- hosts: all
+  become: true
+  tasks:
+
+# stop if we have old docker container is there with the same name. if no container is there with that name then it will throw error. 
+# to handle that error ignore error : yes. if any error comes it will ignore
+  - name: stop if we have old docker container
+    command: docker stop simple-devops-container
+    ignore_errors: yes
+
+  - name: remove stopped docker container
+    command: docker rm simple-devops-container
+    ignore_errors: yes
+
+  - name: remove current docker image
+    command: docker rmi simple-devops-image:latest
+    ignore_errors: yes
+
+  - name: pull docker image from dcker hub
+    command: docker pull prakashcheckin/simple-devops-image:latest
+
+  - name: create docker container using simple devops image
+    command: docker run -d --name simple-devops-container -p 8080:8080 prakashcheckin/simple-devops-image:latest
+
+

@@ -1,0 +1,8 @@
+# Pull tomcat latest image from dockerhub 
+From tomcat:latest
+
+# Maintainer
+MAINTAINER "AR Shankar" 
+
+# war file is push from jenkins it is available in server. copy war that war file on to container, while creating the container
+COPY ./webapp.war /usr/local/tomcat/webapps
